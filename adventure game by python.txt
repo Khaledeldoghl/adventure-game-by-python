@@ -1,0 +1,292 @@
+import time
+import random
+
+your_score = 0
+red_magic = 0
+blue_magic = 0
+green_magic = 0
+name = ''
+
+monsters = ['zombie', 'baby dragon', 'herobrine']
+monster_random = random.choice(monsters)
+
+
+def print_pause(message):
+    print(message)
+    time.sleep(1.5)
+
+
+def lose():
+    print_pause('You lose.')
+    s = input('Do you want to try again? (y/n): ')
+    if s == 'y':
+        game()
+    elif s == 'n':
+        print('Okay, goodbye! See you soon.')
+        exit()
+    else:
+        print_pause('Please write y to play again or n to close the game.\n')
+        lose()
+
+def win():
+    print_pause('You win.')
+    w = input('Do you want to try again? (y/n): ')
+    if w == 'y':
+        game()
+    elif w == 'n':
+        print('Okay, goodbye! See you soon.')
+        exit()
+    else:
+        print_pause('Please write y to play again or n to close the game.\n')
+        win()
+    
+def game_intro():
+    global name
+    print_pause('Hello')
+    print_pause('Wake up!')
+    print_pause('You are a kid who has fallen into the underworld.')
+    time.sleep(1.5)
+    name = input('What is your name, buddy? ')
+    time.sleep(1.5)
+    print('Good name,', name)
+    print_pause('I like this name.')
+    print_pause('Don\'t waste time.')
+    time.sleep(1.5)
+    print('You must escape from here before the monsters kill you, ' + name + '.')
+    print_pause('You see two doors.')
+    print_pause('Door number 1 has a skeleton behind it.')
+    print_pause('Door number 2 is empty.\n')
+
+
+def first_choice():
+    choice1 = int(input('Which door do you want to enter? Write 1 to enter door 1, or 2 to enter door 2: '))
+    if choice1 == 1:
+        print_pause('You are moving towards the first door.')
+        print_pause('The skeleton sees you.')
+        print_pause('And kills you. 🙁')
+        lose()
+    elif choice1 == 2:
+        print_pause('You are moving towards the second door.')
+        print_pause('You open the door.')
+        print_pause('Wow, you find a treasure!')
+        print_pause('To open it, you need to solve a question.')
+    else:
+        print_pause('Please write 1 or 2.\n')
+        first_choice()
+
+
+def first_question():
+    global your_score
+    q1 = input('What is 77 + 33? ')
+    if int(q1) == 110:
+        print_pause('Wow, you are so clever!')
+        print_pause('You earn 10 points and a wooden sword.')
+        your_score += 10
+        time.sleep(1.5)
+        print('Your score is', your_score,'\n')
+    else:
+        print_pause('You die.')
+        print_pause('The box exploded.')
+        print_pause('And you die.\n')
+        lose()
+
+
+def go_for_the_skeleton():
+    print_pause('Now, remember the skeleton behind the first door.')
+    print_pause('You are now stronger.')
+    print_pause('Let\'s defeat it.')
+    print_pause('You exit door 2...')
+    print_pause('You open door 1...')
+    print_pause('The skeleton sees you.\n')
+
+
+def kill_or_no():
+    global your_score
+    global red_magic
+    choice3 = input('Kill the skeleton? (yes/no): ')
+    if choice3 == 'yes':
+        red_magic += 1
+        your_score += 10
+        print_pause('You move around the skeleton...')
+        print_pause('He sees you.')
+        print_pause('But you quickly approach him and kill him.')
+        print_pause('You gain another 10 points, 1 red magic, and a wooden shield.')
+        time.sleep(1.5)
+        print('Your red magic count:', red_magic)
+        time.sleep(1.5)
+        print('Your score:', your_score)
+        print_pause('Suddenly, you find yourself in a place with three castles.\n')
+    elif choice3 == 'no':
+        print_pause('You move around the skeleton...')
+        print_pause('He sees you.')
+        print_pause('The skeleton approaches you and kills you.\n')
+        lose()
+    else:
+        print_pause('write yes/no')
+
+def three_castles():
+    global red_magic
+    global blue_magic
+    global green_magic
+    while True:
+        print_pause('1. To open the first castle, you must have red magic.')
+        print_pause('2. To open the second castle, you must have blue magic.')
+        print_pause('3. To open the third castle, you must have green magic.')
+        choice4 = int(input('Choose the castle you want to enter: \n'))
+        if choice4 == 1:
+            if red_magic >= 1:
+                castle1()
+                return
+            else:
+                print_pause('No, you dont have red magic.')
+        elif choice4 == 2:
+            if blue_magic >= 1:
+                castle2()
+                return
+            else:
+                print_pause('No, you dont have blue magic.')
+        elif choice4 == 3:
+            if green_magic >= 1:
+                castle3()
+                return
+            else:
+                print_pause('No, you dont have green magic.')
+        else:
+            print_pause('Please choose 1, 2, or 3.')
+
+def castle1():
+    global blue_magic
+    global your_score
+    print_pause('You are now heading to the first castle')
+    print_pause('You opened the castle door')
+    time.sleep(1.5)
+    print('There is a', monster_random, 'and blue magic behind the', monster_random)
+    time.sleep(1.5)
+    print('you have 3 choices\n1.kill the', monster_random, 'and take 10 points\n2.use red magic to scare the', monster_random, 'and lose 15 points\n3.exit the castle')
+
+    choice5 = int(input('what is your choice'))
+    if choice5 == 1:
+        print_pause('You are stepping into the beast')
+        print_pause('And you stick your sword in his head')
+        print_pause('Now you are heading towards magic')
+        blue_magic += 1
+        your_score += 10
+        time.sleep(1.5)
+        print('you now have', blue_magic, 'blue magic')
+        time.sleep(1.5)
+        print('your points is:', your_score)
+        print_pause('you exit from castle 1\n')
+        three_castles()
+    elif choice5 == 2:
+        time.sleep(1.5)
+        print('You cast your magic on the', monster_random)
+        time.sleep(1.5)
+        print('The', monster_random, 'got scared and ran away')
+        print_pause('you gain the blue magic and lose 15 points')
+        blue_magic += 1
+        your_score -= 15
+        time.sleep(1.5)
+        print('your score now is', your_score, 'and have', blue_magic, 'blue magic')
+        print_pause('you exit from castel 1\n')
+        three_castles()
+    elif choice5 == 3:
+        three_castles()
+    else:
+        print_pause('write 1/2/3')
+
+
+def castle2():
+    global green_magic
+    global your_score
+    print_pause('You are now heading towards Castle 2')
+    print_pause('You see green magic')
+    print_pause('You must answer a question to take the magic\n')
+    q2()
+
+
+def q2():
+    global monster_random
+    global your_score
+    global green_magic
+    q2 = int(input('How many days in a year? '))
+    if q2 == 365:
+        time.sleep(1.5)
+        print('correct answer,', name)
+        print_pause('Now you have green magic and gain 10 points')
+        your_score += 10
+        green_magic += 1
+        time.sleep(1.5)
+        print('your points:', your_score, '\ngreen magic:', green_magic)
+        time.sleep(1.5)
+        print('A', monster_random, 'monster is approaching\n')
+        monster2()
+    else:
+        print_pause('the castel was destroyed\n')
+        lose()
+
+
+def monster2():
+    global monster_random
+    global your_score
+    global green_magic
+    m2 = int(input('1. kill\n2. use green magic to scare him\n'))
+    if m2 == 1:
+        time.sleep(1.5)
+        print('you kill the', monster_random)
+        print_pause('you gain 10 points')
+        your_score += 10
+        time.sleep(1.5)
+        print('your points now', your_score)
+        print_pause('you got out of the castle 2\n')
+        three_castles()
+    elif m2 == 2:
+        time.sleep(1.5)
+        print('you cast the magic on the', monster_random)
+        time.sleep(1.5)
+        print('the', monster_random, 'got scared and ran away')
+        time.sleep(1.5)
+        print('you lose 15 points')
+        your_score -= 15
+        time.sleep(1.5)
+        print('your score now is', your_score, 'and have', green_magic, 'green magic')
+        print_pause('you come out of the castle 2\n')
+        three_castles()
+
+
+def castle3():
+    global your_score
+    global green_magic
+    if your_score==0:
+        good_end()
+    else:
+        bad_end()
+
+def good_end():
+    print_pause('You are heading towards the castle3')
+    print_pause('You opened the door and moved your body to the surface of the earth')
+    time.sleep(1.5)
+    print('good jop',name)
+    print_pause('the end')
+    print_pause('created by khaled mohamed eldoghl\n')
+    win()
+    
+def bad_end():
+    print_pause('You are heading towards the castle3')
+    print_pause('you open the doo...\n..........')
+    print_pause('\033[91m' + ".........")
+    print_pause('\033[91m' + "you...")
+    print_pause('\033[91m' + "you kill my sons.")
+    print_pause('\033[91m' + "you should die.")
+    print_pause('\033[0m') 
+    lose()
+
+def game():
+    game_intro()
+    first_choice()
+    first_question()
+    go_for_the_skeleton()
+    kill_or_no()
+    three_castles()
+
+
+game()
